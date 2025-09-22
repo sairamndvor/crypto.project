@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package crypto.v1;
+
+// Price data for a cryptocurrency ticker
+message TickerPrice {
+  string ticker = 1;
+  double price = 2;
+  int64 timestamp = 3;
+  string exchange = 4;
+}
+
+// Request to add a ticker to the subscription
+message AddTickerRequest {
+  string ticker = 1;
+}
+
+// Request to remove a ticker from the subscription
+message RemoveTickerRequest {
+  string ticker = 1;
+}
+
+// Response for add/remove operations
+message TickerResponse {
+  bool success = 1;
+  string message = 2;
+  repeated string active_tickers = 3;
+}
+
+// Request to get current active tickers
+message GetTickersRequest {}
+
+// Response with current active tickers
+message GetTickersResponse {
+  repeated string tickers = 1;
+}
+
+// Price streaming service
+service CryptoPriceService {
+  // Add a ticker to the price stream
+  rpc AddTicker(AddTickerRequest) returns (TickerResponse);
+  
+  // Remove a ticker from the price stream
+  rpc RemoveTicker(RemoveTickerRequest) returns (TickerResponse);
+  
+  // Get currently active tickers
+  rpc GetTickers(GetTickersRequest) returns (GetTickersResponse);
+  
+  // Stream price updates for subscribed tickers
+  rpc StreamPrices(GetTickersRequest) returns (stream TickerPrice);
+}
