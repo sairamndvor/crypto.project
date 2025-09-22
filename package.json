@@ -1,0 +1,17 @@
+{
+  "name": "crypto-price-streaming",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install:all": "pnpm install --recursive",
+    "build": "pnpm run build --recursive",
+    "dev": "pnpm run dev --recursive --parallel"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
